@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MINEREL Store — BoxPvP Ranks</title>
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #161b22;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    .left-section, .right-section {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .left-section span:hover {
+      color: #00bcd4;
+    }
+
+    .glow {
+      height: 60px;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite, glow 2s ease-in-out infinite;
+      filter:
+        drop-shadow(0 0 12px #00bcd4)
+        drop-shadow(0 0 24px #00bcd4)
+        drop-shadow(0 0 36px #00bcd4)
+        drop-shadow(0 0 60px #00ffff);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 12px #00bcd4)
+          drop-shadow(0 0 24px #00bcd4)
+          drop-shadow(0 0 36px #00bcd4)
+          drop-shadow(0 0 60px #00ffff);
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 20px #00ffff)
+          drop-shadow(0 0 40px #00ffff)
+          drop-shadow(0 0 60px #00ffff)
+          drop-shadow(0 0 90px #00ffff);
+      }
+    }
+
+    .wrapper {
+      display: flex;
+      min-height: calc(100vh - 80px);
+      padding-left: 30px;
+    }
+
+    .sidebar {
+      background-color: #161b22;
+      border-radius: 12px;
+      margin-right: 30px;
+      padding: 20px;
+      width: 250px;
+    }
+
+    .sidebar h2 {
+      color: #00bcd4;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .menu-item {
+      color: #c9d1d9;
+      cursor: pointer;
+      font-size: 18px;
+      margin-bottom: 15px;
+      transition: color .3s;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      color: #00bcd4;
+    }
+
+    .dropdown-content {
+      margin-left: 15px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+    }
+
+    .dropdown-content.open {
+      max-height: 500px;
+    }
+
+    .dropdown-content .menu-item {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .content {
+      flex: 1;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #161b22;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #00bcd4;
+      margin-bottom: 30px;
+    }
+
+    .rank {
+      margin-bottom: 25px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      text-align: center;
+    }
+
+    .rank h2 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    .explorer   { color: #32CD32; }
+    .adventurer { color: #00B7EB; }
+    .treasurer  { color: #FFD700; }
+    .emperor    { color: #8B0000; }
+
+    .rank img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    footer {
+      background-color: #161b22;
+      color: #8b949e;
+      padding: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left-section" onclick="copyIP()" title="Click to copy IP">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/controller.png" width="24" alt="Controller">
+      <span>SOON</span>
+    </div>
+    <img src="minerel.png" alt="MINEREL Logo" class="glow" onclick="openDiscord()">
+    <div class="right-section" onclick="openDiscord()">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/discord-logo.png" width="24" alt="Discord">
+      <span>MINEREL</span>
+    </div>
+  </header>
+
+  <div class="wrapper">
+    <nav class="sidebar">
+      <h2>Store Menu</h2>
+      <div class="menu-item active" onclick="activate(this)">🏠 Home</div>
+
+      <div class="menu-item" onclick="toggleDropdown('lifesteal'); activate(this)">
+        💔 Lifesteal ▼
+      </div>
+      <div id="lifesteal" class="dropdown-content">
+        <div class="menu-item" onclick="activate(this)">⚖️ Ranks</div>
+        <div class="menu-item" onclick="activate(this)">🗝️ Keys</div>
+        <div class="menu-item" onclick="activate(this)">💎 Coins</div>
+        <div class="menu-item" onclick="activate(this)">🎨 Cosmetic</div>
+      </div>
+
+      <div class="menu-item" onclick="toggleDropdown('boxpvp'); activate(this)">
+        ⚔️ BoxPvP ▼
+      </div>
+      <div id="boxpvp" class="dropdown-content">
+        <div class="menu-item" onclick="goToRanks()">⚖️ Ranks</div>
+        <div class="menu-item" onclick="activate(this)">🗝️ Keys</div>
+        <div class="menu-item" onclick="activate(this)">💎 Coins</div>
+        <div class="menu-item" onclick="activate(this)">🎨 Cosmetic</div>
+      </div>
+    </nav>
+
+    <main class="content">
+      <h1>BoxPvP Ranks</h1>
+
+      <div class="rank explorer">
+        <img src="Explorer.png" alt="Explorer Rank">
+        <h2>Explorer — $4.99</h2>
+        <p>Starter rank with basic perks and green name tag.</p>
+      </div>
+
+      <div class="rank adventurer">
+        <img src="Adventurer.png" alt="Adventurer Rank">
+        <h2>Adventurer — $9.99</h2>
+        <p>Includes Adventurer perks + exclusive features and aqua name tag.</p>
+      </div>
+
+      <div class="rank treasurer">
+        <img src="Treasurer.png" alt="Treasurer Rank">
+        <h2>Treasurer — $19.99</h2>
+        <p>Includes Treasurer perks + coin boosts and golden name tag.</p>
+      </div>
+
+      <div class="rank emperor">
+        <img src="Emperor.png" alt="Emperor Rank">
+        <h2>Emperor — $39.99</h2>
+        <p>Top-tier rank with all perks and dark red name tag.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 MINEREL. All rights reserved.
+  </footer>
+
+  <script>
+    function copyIP() {
+      navigator.clipboard.writeText("Server isn't released yet")
+        .then(() => alert("Server isn't released yet copied!"));
+    }
+    function openDiscord() {
+      window.open('https://discord.gg/Cq32ykgSg3','_blank');
+    }
+    function toggleDropdown(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+    function activate(el) {
+      document.querySelectorAll('.menu-item.active')
+        .forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function goToRanks() {
+      window.location.href = "Boxpvp-ranks.html";
+    }
+  </script>
+</body>
+</html>
